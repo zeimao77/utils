@@ -1,0 +1,17 @@
+###############
+secondBoardkey W 82 0
+wait 100
+boardkey 16 0
+boardkeyNames NOTEPAD
+boardkeyName ENTER
+wait 500
+boardkey 16 0
+boardkeyNames HELLO
+boardkeyName SPACE
+boardkeyNames WORLD123
+secondBoardkey S 49 0
+secondBoardkey C 83 0
+wait 200
+boardkeyNames ABC
+boardkeyName ENTER
+secondBoardkey A 115 0
