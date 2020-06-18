@@ -1,15 +1,24 @@
 ###############
+## WINDOWS + R 命令
 secondBoardkey W 82 0
 wait 100
+## 按下SHITFT切换到英文输入 
 boardkey 16 0
+## 执行NOTEPAD命令
 boardkeyNames NOTEPAD
 boardkeyName ENTER
 wait 500
+## 按下SHITFT切换到英文输入 
 boardkey 16 0
+## 输入HELLO WORLD123!
 boardkeyNames HELLO
 boardkeyName SPACE
 boardkeyNames WORLD123
 secondBoardkey S 49 0
+boardkeyName ENTER
+## 重置到第14行 9次
+reset 14 9
+## CTRL+S保存abc
 secondBoardkey C 83 0
 wait 200
 boardkeyNames ABC

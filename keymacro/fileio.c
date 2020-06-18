@@ -12,6 +12,9 @@ void readfile(char* filepath, struct KeyBoardActionList* actionList) {
 		if(feof(fp)) break;
 		fgets(buffer, 1024, (FILE*)fp);
 		if(buffer[0] == '#') {
+			strcpy((actionArr + i)->actionName,"##remark");
+			i++;
+			(actionList -> size)++;
 			continue;
 		}
 		printf("line:%d=%s", i,buffer);

@@ -8,7 +8,8 @@ keyboard exe filepath
 filepath为必需参数，指定一个配置文件读取并执行;
 
 ```
-keyboard exe "E:\\gitdir\\zeimao77-proj\\keyboard\\test.MACRO"
+keymacro.exe test.macro
+keyboard.exe "E:\\gitdir\\zeimao77-proj\\keyboard\\test.macro"
 ```
 
 ## 配置
@@ -55,6 +56,13 @@ boardkeyName ENTER
 ```
 #示例：等待1000毫秒;
 wait 1000
+```
++ reset 
+重复执行从第n行到当前行，执行m次;
+
+```
+#示例：重置执行光标到第14行，重复9次;
+reset 14 9
 ```
 
 ## 键值名
@@ -131,4 +139,3 @@ wait 1000
 |186|;|[;:]|
 | 188 | , | [,<] |
 | 191 | . | [.>] |
-

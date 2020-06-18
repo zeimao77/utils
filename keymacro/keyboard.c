@@ -82,6 +82,9 @@ int doaction(struct KeyBoardAction *action) {
 		Sleep(p1);
 		return 1;
 	}
+	if(strcmp("##remark",action -> actionName) == 0) {
+		return 1;
+	}
 	return 0;
 }
 
