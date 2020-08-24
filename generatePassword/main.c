@@ -1,5 +1,6 @@
 #include <time.h>
 #include "systemutil.h"
+#include "logger.h"
 
 int main(int argc, char *argv[]){
 	char range[80],rangeFlag[5],password[512],temp[32];
@@ -67,10 +68,13 @@ int main(int argc, char *argv[]){
 		password[i] = range[ind];
 	}
 	password[i]='\0';
+    FILE *file = initLogger("generatePassword.log");
+    info(file,password);
 	if(!copyToClipboard(password)) {
 		printf("结果(已复制到剪粘板):%s\n",password);
 	} else {
 		printf("结果:%s\n",password);
 	}
+	LoggerClose(file);
 	system("pause");
 }
