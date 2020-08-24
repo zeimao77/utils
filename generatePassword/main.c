@@ -75,6 +75,6 @@ int main(int argc, char *argv[]){
 	} else {
 		printf("½á¹û:%s\n",password);
 	}
-	LoggerClose(file);
+	closeLogger(file);
 	system("pause");
 }

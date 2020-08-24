@@ -13,5 +13,5 @@ FILE *initLogger(char *path);
 void info(FILE *file,char *str);
 void error(FILE *file,char *str); 
 void warn(FILE *file,char *str); 
-void LoggerClose(FILE *file); 
+void closeLogger(FILE *file); 
 #endif

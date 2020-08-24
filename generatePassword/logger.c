@@ -40,7 +40,7 @@ void warn(FILE *file,char *msg) {
     fprintf(file, "[WARN][%s]:%s\n",nowTime,msg);
 }
 
-void LoggerClose(FILE *file) {
+void closeLogger(FILE *file) {
 	if(fclose(file) != 0) {
 		printf("LOGGER CLOSE ERROR");
 	}
