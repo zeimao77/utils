@@ -51,8 +51,10 @@ int Set_add(struct Set *set,char *str) {
 	if(set -> current_length > set -> max_length) {
 		return CONSTANT_RESULT_FAIL;	
 	}
-	set->data[set->current_length] = str;
-	set->current_length++;
+	char* s = (char *)malloc(8);
+	strcpy(s,str);
+	set->data[set->current_length] = s;
+	set->current_length = set->current_length + 1;
 	return CONSTANT_RESULT_SUCCESS;
 }
 

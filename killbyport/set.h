@@ -7,7 +7,7 @@
 #include "constant.h"
 
 
-#define SET_MAX_LENGTH 32
+#define SET_MAX_LENGTH 16
 
 struct Set {
 	char *data[SET_MAX_LENGTH];

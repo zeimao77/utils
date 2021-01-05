@@ -5,6 +5,7 @@
 
 int findPid(char *port,struct Set *set);
 int killPid(char *pid);
+void str_remove_blank(char *ch);
 
 int main(int argc, char *argv[]){
 	struct Set port_set = Set_init();
@@ -64,6 +65,7 @@ int findPid(char *port,struct Set *set) {
 			}
 			pid[flag] = '\0';
 		}
+		str_remove_blank(pid);
 		Set_add(set,pid);
 		p = strtok(NULL,"\n");
 	}
@@ -79,3 +81,28 @@ int killPid(char *pid) {
     system(command);
 }
 
+void str_remove_blank(char *ch) {
+	char *c;
+	while (*ch != 0x20) {
+		if (*ch == '\0')
+		{
+			return;
+		}
+		ch++;
+	}
+	c = ch + 1;
+	while (*c == 0x20) {
+		c++;
+	}
+	while (*c != '\0') {
+		if (*c != 0x20)
+		{
+			*ch = *c;
+			*c = 0x20;
+			ch++;
+		}
+		c++;
+	}
+	*ch = '\0';
+	return;
+}
