@@ -9,7 +9,7 @@
 
 struct Node
 {
-    char str[8];
+    char *str;
 };
 
 struct Node *Node_init(char *str);
@@ -20,6 +20,6 @@ int Node_compare(struct Node node1, struct Node node2);
 // 打印元素节点
 void Node_print(struct Node node);
 
-
-
 #endif
+
+

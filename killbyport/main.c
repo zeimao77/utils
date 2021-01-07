@@ -8,7 +8,7 @@ int killPid(char *pid);
 void str_remove_blank(char *ch);
 
 int main(int argc, char *argv[]){
-	struct Seq *s1 = Seq_init();
+	struct Seq *s1 = Seq_init(16);
 	if(argc <= 1) {
 		char str[32];
 		printf("%s\n","请输入端口，多个端口用空格[' ']分隔:");
@@ -32,9 +32,9 @@ int main(int argc, char *argv[]){
 		}
 	}
     Seq_print("接收到如下端口需要处理",s1);
-	struct Seq *s2 = Seq_init();
+	struct Seq *s2 = Seq_init(32);
 	for(int i=0;i<s1->current_length;i++) {
-		char *p = s1->list[i].str;
+		char *p = s1->nodes[i].str;
     	findPid(p,s2);
 	}
     Seq_print("查找到PID列表",s2);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
     	delay(3);
     }
     for(int i=0;i<s2->current_length;i++) {
-    	char *p = s2->list[i].str;
+    	char *p = s2->nodes[i].str;
     	killPid(p);
 	}
 	printf("%s\n","处理结束，成功！！");

@@ -3,7 +3,9 @@
 struct Node *Node_init(char *str)
 {
     struct Node *n = (struct Node *)malloc(sizeof(struct Node));
-    strcpy(n->str, str);
+    char *s = (char *)malloc(strlen(str) + 1);
+    strcpy(s, str);
+    n->str = s;
     return n;
 }
 

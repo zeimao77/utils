@@ -6,16 +6,14 @@
 #include <stdlib.h>
 #include "node.h"
 
-#define SEQ_MAX_LENGTH 16
-
 struct Seq
 {
-    struct Node list[SEQ_MAX_LENGTH];
+    struct Node *nodes;
     int current_length;
 };
 
 //初始化队列表;
-struct Seq *Seq_init();
+struct Seq *Seq_init(int size);
 
 //追加元素节点;
 int Seq_append(struct Seq *seq, struct Node *node);
@@ -33,3 +31,4 @@ int Seq_search(struct Seq *seq, struct Node node);
 struct Node Seq_compare_get(struct Seq *seq, struct Node node);
 
 #endif
+
