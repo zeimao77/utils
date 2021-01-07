@@ -1,14 +1,14 @@
 #include "winlib.h"
-#include "set.h"
 #include "constant.h"
+#include "seq.h"
 #include <string.h>
 
-int findPid(char *port,struct Set *set);
+int findPid(char *port,struct Seq *set);
 int killPid(char *pid);
 void str_remove_blank(char *ch);
 
 int main(int argc, char *argv[]){
-	struct Set port_set = Set_init();
+	struct Seq *s1 = Seq_init();
 	if(argc <= 1) {
 		char str[32];
 		printf("%s\n","请输入端口，多个端口用空格[' ']分隔:");
@@ -18,33 +18,39 @@ int main(int argc, char *argv[]){
 		}
 		char *p = strtok(str," ");
 		while(p != NULL) {
-	    	Set_add(&port_set,p);
+			struct Node *n1 = Node_init(p);
+			Seq_append(s1,n1);
 	    	p = strtok(NULL," ");
 	    }
 	} else {
 		for(int i=1;i<=argc;i++) {
-			Set_add(&port_set,argv[i]);
+			if(argv[i] != NULL && strlen(argv[i]) > 0) {
+				struct Node *n1 = Node_init(argv[i]);
+				Seq_append(s1,n1);
+			}
+
 		}
 	}
-    Set_print("接收到如下端口需要处理",&port_set);
-	struct Set pid_set = Set_init();
-	for(int i=0;i<port_set.current_length;i++) {
-    	findPid(Set_get(&port_set,i),&pid_set);
+    Seq_print("接收到如下端口需要处理",s1);
+	struct Seq *s2 = Seq_init();
+	for(int i=0;i<s1->current_length;i++) {
+		char *p = s1->list[i].str;
+    	findPid(p,s2);
 	}
-    Set_print("查找到PID列表",&pid_set);
-    if(pid_set.current_length > 0) {
+    Seq_print("查找到PID列表",s2);
+    if(s2->current_length > 0) {
     	delay(3);
     }
-    for(int i=0;i<pid_set.current_length;i++) {
-    	killPid(Set_get(&pid_set,i));
+    for(int i=0;i<s2->current_length;i++) {
+    	char *p = s2->list[i].str;
+    	killPid(p);
 	}
-	printf("%s\n","RESULT SUCCESS");
+	printf("%s\n","处理结束，成功！！");
     return 0;
 }
 
 
-
-int findPid(char *port,struct Set *set) {
+int findPid(char *port,struct Seq *seq) {
 	char command[32];
 	char buffer[10240]="";
 	char *cmd_findport = "netstat -aon|findstr ";
@@ -66,7 +72,10 @@ int findPid(char *port,struct Set *set) {
 			pid[flag] = '\0';
 		}
 		str_remove_blank(pid);
-		Set_add(set,pid);
+		struct Node *n = Node_init(pid);
+		if(pid != NULL && strlen(pid) > 0 && Seq_search(seq,*n) <0) {
+			Seq_append(seq,n);
+		}
 		p = strtok(NULL,"\n");
 	}
     }
