@@ -1,4 +1,5 @@
 #include "graph2.h"
+#include "defc.h"
 
 struct Gnode *Gnode_init2(long value){
     struct Node *data = Node_init(value);
@@ -108,13 +109,106 @@ int Graph_insert_edge(struct Graph *g,struct Gnode *n1,struct Gnode *n2,int powe
 }
 
 int Graph_delete_edge(struct Graph *g,struct Gnode *n1,struct Gnode *n2){
-
+    struct Gedge *gedge = n1 -> firstin;
+    struct Gedge *preedge = NULL;
+    while(gedge != NULL) {
+        if(gedge -> tailvex == n1) {
+            if(gedge -> headvex == n2) {
+                if(preedge == NULL) {
+                    n1 -> firstin = gedge -> tlink;
+                } else if(preedge -> hlink == gedge) {
+                    preedge -> hlink = gedge -> tlink;    
+                } else if(preedge -> tlink == gedge) {
+                    preedge -> tlink = gedge -> tlink;
+                }
+            }
+            preedge = gedge;
+            gedge = gedge -> tlink;
+        } else if(gedge -> headvex == n1) {
+            if(gedge -> tailvex == n2) {
+                if(preedge == NULL) {
+                    n1 -> firstin = gedge -> hlink;
+                } else if(preedge -> hlink == gedge){
+                    preedge -> hlink = gedge -> hlink;
+                } else if(preedge -> tlink == gedge) {
+                    preedge -> tlink = gedge -> hlink;
+                }
+                return gedge -> power;
+            }
+            preedge = gedge;
+            gedge = gedge -> hlink;
+        }
+    }
+    gedge = n2 -> firstin;
+    preedge = NULL;
+    while(gedge != NULL) {
+        if(gedge -> tailvex == n2) {
+            if(gedge -> headvex == n1) {
+                if(preedge == NULL) {
+                    n2 -> firstin = gedge -> tlink;
+                } else if(preedge -> hlink == gedge){
+                    preedge -> hlink = gedge -> tlink;    
+                } else if(preedge -> tlink == gedge) {
+                    preedge -> tlink = gedge -> tlink;
+                }
+                Gedge_destroy(gedge);
+            }
+            preedge = gedge;
+            gedge = gedge -> tlink;
+        } else if(gedge -> headvex == n2) {
+            if(gedge -> tailvex == n1) {
+                if(preedge == NULL) {
+                    n2 -> firstin = gedge -> hlink;
+                } else if(preedge -> hlink == gedge){
+                    preedge -> hlink = gedge -> hlink;
+                } else if(preedge -> tlink == gedge) {
+                    preedge -> tlink = gedge -> hlink;
+                }
+                Gedge_destroy(gedge);
+            }
+            preedge = gedge;
+            gedge = gedge -> hlink;
+        }
+    }
+    return 0;
 }
 
 int Graph_get_power(struct Graph *g,struct Gnode *n1,struct Gnode *n2){
+    struct Gedge *gedge = n1 -> firstin;
+    while(gedge != NULL) {
+        if(gedge -> tailvex == n1) {
+            if(gedge -> headvex == n2) {
+                return gedge -> power;
+            }
+            gedge = gedge -> tlink;
+        } else if(gedge -> headvex == n1) {
+            if(gedge -> tailvex == n2) {
+                return gedge -> power;
+            }
+            gedge = gedge -> hlink;
+        }
+    }
+    return INT_MAX;
 }
 
 int Graph_set_power(struct Graph *g,struct Gnode *n1,struct Gnode *n2,int power){
+    struct Gedge *gedge = n1 -> firstin;
+    while(gedge != NULL) {
+        if(gedge -> tailvex == n1) {
+            if(gedge -> headvex == n2) {
+                gedge -> power = power;
+                return 1;
+            }
+            gedge = gedge -> tlink;
+        } else if(gedge -> headvex == n1) {
+            if(gedge -> tailvex == n2) {
+                gedge -> power = power;
+                return 1;
+            }
+            gedge = gedge -> hlink;
+        }
+    }
+    return 0;
 }
 
 int Graph_isempty(struct Graph *g){
